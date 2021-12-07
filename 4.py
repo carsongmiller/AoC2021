@@ -6,8 +6,6 @@ with open('4_input.txt') as f:
 
 def vertWin(board):
 	for i in range(len(board[0])):
-		# print(board)
-		# print(i)
 		col = set([item[i] for item in board])
 		if len(col) == 1 and '' in col: return True
 	return False
@@ -17,16 +15,6 @@ def horiWin(board):
 		col = set(board[i])
 		if len(col) == 1 and '' in col: return True
 	return False
-
-
-board = [
-['','','56','',''],
-['60','','','','96'],
-['','','','',''],
-['','','9','',''],
-['','29','','5','']
-]
-print(horiWin(board))
 
 def part1(lines):
 
