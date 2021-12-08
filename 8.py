@@ -34,7 +34,7 @@ def isValidDigit(segments):
 	segmentSet = set(segments)
 	found = False
 	for validDigit in valid:
-		if segmentSet.union(validDigit) == segmentSet:
+		if segmentSet == validDigit:
 			return True
 	return False
 
@@ -69,40 +69,44 @@ def permutation(lst):
            l.append([m] + p)
     return l
 
-	
-#takes list of digits and modifies dictionary of possible valid mappings for each segment accordingly
-def reducePossible(possible, digits):
-	for digit in digits:
-		antiDigit = []
-		allChars = [chr(x) for x in range(ord('a'), ord('g') + 1)]
-		for c in allChars:
-			if c not in digit: antiDigit.append(c)
+def printDigit(segments, map = {'a': 'a','b': 'b','c': 'c','d': 'd','e': 'e','f': 'f','g': 'g'}):
+	segmentsMapped = [map[x] for x in segments]
+	s = ' '
+	s += '---' if 'a' in segmentsMapped else ' '
+	s += ' \n'
+	s += '|' if 'b' in segmentsMapped else ' '
+	s += '   '
+	s += '|' if 'c' in segmentsMapped else ' '
+	s += '\n '
+	s += '---' if 'd' in segmentsMapped else ' '
+	s += ' \n'
+	s += '|' if 'e' in segmentsMapped else ' '
+	s += '   '
+	s += '|' if 'f' in segmentsMapped else ' '
+	s += '\n '
+	s += '---' if 'g' in segmentsMapped else ' '
+	s += ' '
+	print(s)
 
-		if len(digit) == 2:
-			possible['a'] = removeAllBut(possible['a'], [c for c in antiDigit])
-			possible['b'] = removeAllBut(possible['b'], [c for c in antiDigit])
-			possible['c'] = removeAllBut(possible['c'], [c for c in digit])
-			possible['d'] = removeAllBut(possible['d'], [c for c in antiDigit])
-			possible['e'] = removeAllBut(possible['e'], [c for c in antiDigit])
-			possible['f'] = removeAllBut(possible['f'], [c for c in digit])
-			possible['g'] = removeAllBut(possible['g'], [c for c in antiDigit])
-		if len(digit) == 3:
-			possible['a'] = removeAllBut(possible['a'], [c for c in digit])
-			possible['b'] = removeAllBut(possible['b'], [c for c in antiDigit])
-			possible['c'] = removeAllBut(possible['c'], [c for c in digit])
-			possible['d'] = removeAllBut(possible['d'], [c for c in antiDigit])
-			possible['e'] = removeAllBut(possible['e'], [c for c in antiDigit])
-			possible['f'] = removeAllBut(possible['f'], [c for c in digit])
-			possible['g'] = removeAllBut(possible['g'], [c for c in antiDigit])
-		if len(digit) == 4:
-			possible['a'] = removeAllBut(possible['a'], [c for c in antiDigit])
-			possible['b'] = removeAllBut(possible['b'], [c for c in digit])
-			possible['c'] = removeAllBut(possible['c'], [c for c in digit])
-			possible['d'] = removeAllBut(possible['d'], [c for c in digit])
-			possible['e'] = removeAllBut(possible['e'], [c for c in antiDigit])
-			possible['f'] = removeAllBut(possible['f'], [c for c in digit])
-			possible['g'] = removeAllBut(possible['g'], [c for c in antiDigit])
-	return possible
+def segmentsToInt(segments, map = {'a': 'a','b': 'b','c': 'c','d': 'd','e': 'e','f': 'f','g': 'g'}):
+	digits = {
+		0: set(['a','b', 'c', 'e', 'f', 'g']),
+		1: set(['c', 'f']),
+		2: set(['a', 'c', 'd', 'e', 'g']),
+		3: set(['a', 'c', 'd', 'f', 'g']),
+		4: set(['b', 'c', 'd', 'f']),
+		5: set(['a', 'b', 'd', 'f', 'g']),
+		6: set(['a', 'b', 'd', 'e', 'f', 'g']),
+		7: set(['a', 'c', 'f']),
+		8: set(['a', 'b', 'c', 'd', 'e', 'f', 'g']),
+		9: set(['a', 'b', 'c', 'd', 'f', 'g'])
+	}
+	segmentsMapped = [map[x] for x in segments]
+	segmentSet = set(segmentsMapped)
+	for key in digits:
+		if digits[key] == segmentSet: return key
+	return ''
+
 
 def part2(lines):
 	entries = [[y[0].split(), y[1].split()] for y in [x.split(' | ') for x in lines]]
@@ -114,31 +118,29 @@ def part2(lines):
 			newMap[chr(97 + i)] = perm[i]
 		validMappings.append(newMap)
 
+	outputSum = 0
+	checked = 0
 
 	for entry in entries:
-		# possible = {}
-		# for c in range(ord('a'), ord('g') + 1):
-		# 	possible[chr(c)] = [chr(x) for x in range(ord('a'), ord('g') + 1)]
-		
-		# reducePossible(possible, entry[0])
+		correctMap = {}
 
-		currentValid = validMappings.copy()
-
-		for digit in entry[0]:
-			currentCopy = currentValid.copy()
-			for map in currentCopy:
+		for map in validMappings:
+			for digit in entry[0]:
+				allValid = True
 				#create list of the segments that would be on for this digit with this map
-				testDigit = []
-				for segment in digit:
-					testDigit.append(map[segment])
-				if not isValidDigit(testDigit): currentValid.remove(map)
-		print(len(currentValid))
+				testDigit = [map[segment] for segment in digit]
+				checked += 1
+				if not isValidDigit(testDigit):
+					allValid = False
+					break
+			if allValid:
+				correctMap = map
+				break
+		outputStr = ''
+		for digit in entry[1]: outputStr += str(segmentsToInt([segment for segment in digit], correctMap))
+		outputSum += int(outputStr)
 
-			
-		
-		
-
-		
+	return outputSum
 
 
 print("Part 1:", part1(lines))
