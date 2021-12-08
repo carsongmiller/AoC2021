@@ -23,11 +23,11 @@ def part1(lines):
 		if travelDist < bestDist:
 			bestDist = travelDist
 			bestLoc = i
+	print(bestLoc)
 	return bestDist
 
 def part2(lines):
 	crabs = [int(x) for x in lines[0].split(',')]
-	
 
 	#precompute all the triangle numbers we may need, store in dict
 	triangles = {}
@@ -44,8 +44,10 @@ def part2(lines):
 		if travelDist < bestDist:
 			bestDist = travelDist
 			bestLoc = i
+
+	print(bestLoc)
 	return bestDist
 
 
-print("Part 1:", part1(lines))
-print("Part 2:", part2(lines))
+print("Part 1:", part1(lines)) #turns out this is just the median
+print("Part 2:", part2(lines)) #turns out this is just the mean (rounded down)
