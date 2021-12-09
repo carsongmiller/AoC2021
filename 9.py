@@ -1,5 +1,4 @@
 from timeit import default_timer as timer
-import copy
 
 lines = str()
 with open('9_input.txt') as f:	
