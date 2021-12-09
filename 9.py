@@ -28,30 +28,18 @@ def part1(lines):
 			a = len(map[r])
 			lowPoint = True
 			thisPoint = map[r][c]
-			try:
-				if r-1 >= 0 and map[r-1][c] <= thisPoint:
-					lowPoint = False
-					continue
-			except:
-				pass
-			try:
-				if r+1 < len(map) and map[r+1][c] <= thisPoint:
-					lowPoint = False
-					continue
-			except:
-				pass
-			try:
-				if c-1 >= 0 and map[r][c-1] <= thisPoint:
-					lowPoint = False
-					continue
-			except:
-				pass
-			try:
-				if c+1 < len(map[r]) and map[r][c+1] <= thisPoint:
-					lowPoint = False
-					continue
-			except:
-				pass
+			if r-1 >= 0 and map[r-1][c] <= thisPoint:
+				lowPoint = False
+				continue
+			if r+1 < len(map) and map[r+1][c] <= thisPoint:
+				lowPoint = False
+				continue
+			if c-1 >= 0 and map[r][c-1] <= thisPoint:
+				lowPoint = False
+				continue
+			if c+1 < len(map[r]) and map[r][c+1] <= thisPoint:
+				lowPoint = False
+				continue
 			if lowPoint: totalRisk += thisPoint + 1
 	return totalRisk
 	
@@ -70,30 +58,18 @@ def part2(lines):
 			a = len(map[r])
 			lowPoint = True
 			thisPoint = map[r][c]
-			try:
-				if r-1 >= 0 and map[r-1][c] <= thisPoint:
-					lowPoint = False
-					continue
-			except:
-				pass
-			try:
-				if r+1 < len(map) and map[r+1][c] <= thisPoint:
-					lowPoint = False
-					continue
-			except:
-				pass
-			try:
-				if c-1 >= 0 and map[r][c-1] <= thisPoint:
-					lowPoint = False
-					continue
-			except:
-				pass
-			try:
-				if c+1 < len(map[r]) and map[r][c+1] <= thisPoint:
-					lowPoint = False
-					continue
-			except:
-				pass
+			if r-1 >= 0 and map[r-1][c] <= thisPoint:
+				lowPoint = False
+				continue
+			if r+1 < len(map) and map[r+1][c] <= thisPoint:
+				lowPoint = False
+				continue
+			if c-1 >= 0 and map[r][c-1] <= thisPoint:
+				lowPoint = False
+				continue
+			if c+1 < len(map[r]) and map[r][c+1] <= thisPoint:
+				lowPoint = False
+				continue
 			if lowPoint:
 				lowPoints.append((r, c))
 	
@@ -142,6 +118,7 @@ def part2(lines):
 			infected = newInfected #next loop we'll only look at the points we just now infected
 			#if not fullyFilled: printBasinMap(map)
 		
+		#add this to the ranked list of large basins if necessary
 		if basinSize > largeBasins[0]:
 			largeBasins[2] = largeBasins[1]
 			largeBasins[1] = largeBasins[0]
