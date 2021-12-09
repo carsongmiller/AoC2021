@@ -1,4 +1,8 @@
 from timeit import default_timer as timer
+from mpl_toolkits import mplot3d
+import numpy as np
+import matplotlib.pyplot as plt
+
 
 lines = str()
 with open('9_input.txt') as f:	
@@ -131,6 +135,24 @@ def part2(lines):
 
 	return largeBasins[0] * largeBasins[1] * largeBasins[2]
 
+def visualizeMap(lines):
+	map = []
+	for line in lines:
+		map.append([int(x) for x in line])
+ 
+	X = np.arange(0, len(map[0]), 1)
+	Y = np.arange(0, len(map), 1)
+	X, Y = np.meshgrid(X, Y)	
+	
+	# syntax for 3-D plotting
+	ax = plt.axes(projection ='3d')
+	
+	# syntax for plotting
+	ax.plot_surface(X, Y, Z, cmap ='viridis', edgecolor ='green')
+	ax.set_title('Surface plot geeks for geeks')
+	plt.show()
+	
+
 
 start = timer()
 p1 = part1(lines)
@@ -145,3 +167,5 @@ end = timer()
 print("Part 2:", p2)
 print("Time (msec):", (end - start) * 1000)
 print()
+
+#visualizeMap(lines)
