@@ -2,6 +2,9 @@ from timeit import default_timer as timer
 from mpl_toolkits import mplot3d
 import numpy as np
 import matplotlib.pyplot as plt
+from PIL import Image
+
+
 
 
 lines = str()
@@ -139,18 +142,16 @@ def visualizeMap(lines):
 	map = []
 	for line in lines:
 		map.append([int(x) for x in line])
- 
-	X = np.arange(0, len(map[0]), 1)
-	Y = np.arange(0, len(map), 1)
-	X, Y = np.meshgrid(X, Y)	
-	
-	# syntax for 3-D plotting
-	ax = plt.axes(projection ='3d')
-	
-	# syntax for plotting
-	ax.plot_surface(X, Y, Z, cmap ='viridis', edgecolor ='green')
-	ax.set_title('Surface plot geeks for geeks')
-	plt.show()
+
+	img = Image.new('RGB', (len(map[0]),len(map)), "white") # Create a new white image
+	pixels = img.load() # Create the pixel map
+	scale = 15
+	for i in range(img.size[0]):    # For every pixel:
+		for j in range(img.size[1]):
+			v = map[i][j] * scale
+			pixels[i,j] = (v, v, v) # Set the colour accordingly
+	img.show()
+
 	
 
 
