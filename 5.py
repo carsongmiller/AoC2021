@@ -1,3 +1,5 @@
+from timeit import default_timer as timer
+
 lines = str()
 with open('5_input.txt') as f:
 	lines = [n.strip() for n in f.readlines()]
@@ -71,7 +73,6 @@ def part2(lines):
 				else:
 					map[(x, y)] += 1
 		
-	printMap(map)
 	#now count map entries that are >= 2
 	sum = 0
 	for key in map:
@@ -80,5 +81,16 @@ def part2(lines):
 	return sum
 
 
-print("Part 1:", part1(lines))
-print("Part 2:", part2(lines))
+start = timer()
+p1 = part1(lines)
+end = timer()
+print("Part 1:", p1)
+print("Time (msec):", (end - start) * 1000)
+print()
+
+start = timer()
+p2 = part2(lines)
+end = timer()
+print("Part 2:", p2)
+print("Time (msec):", (end - start) * 1000)
+print()

@@ -1,3 +1,5 @@
+from timeit import default_timer as timer
+
 lines = str()
 with open('7_input.txt') as f:
 	lines = [n.strip() for n in f.readlines()]
@@ -48,6 +50,16 @@ def part2(lines):
 	print(bestLoc)
 	return bestDist
 
+start = timer() 
+p1 = part1(lines) #turns out this is just the median
+end = timer()
+print("Part 1:", p1)
+print("Time (msec):", (end - start) * 1000)
+print()
 
-print("Part 1:", part1(lines)) #turns out this is just the median
-print("Part 2:", part2(lines)) #turns out this is just the mean (rounded down)
+start = timer()
+p2 = part2(lines)#turns out this is just the mean (rounded down)
+end = timer()
+print("Part 2:", p2)
+print("Time (msec):", (end - start) * 1000)
+print()

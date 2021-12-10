@@ -1,6 +1,5 @@
 from timeit import default_timer as timer
 
-
 lines = str()
 with open('8_input.txt') as f:
 	lines = [n.strip() for n in f.readlines()]

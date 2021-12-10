@@ -1,3 +1,5 @@
+from timeit import default_timer as timer
+
 lines = str()
 with open('1_input.txt') as f:
     lines = [int(n) for n in f.readlines()]
@@ -17,5 +19,16 @@ def part2(lines):
 	return count
 
 
-print("Part 1: ", part1(lines))
-print("Part 2: ", part2(lines))
+start = timer()
+p1 = part1(lines)
+end = timer()
+print("Part 1:", p1)
+print("Time (msec):", (end - start) * 1000)
+print()
+
+start = timer()
+p2 = part2(lines)
+end = timer()
+print("Part 2:", p2)
+print("Time (msec):", (end - start) * 1000)
+print()

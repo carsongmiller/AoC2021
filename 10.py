@@ -65,9 +65,7 @@ def part2(lines):
 			elif targetList[i] == '<': thisScore += 4
 		scores.append(thisScore)
 	
-	scores.sort()
-	print(int(len(scores)/2))
-		
+	scores.sort()		
 	return scores[int(len(scores)/2)]
 
 

@@ -1,3 +1,5 @@
+from timeit import default_timer as timer
+
 lines = str()
 with open('4_input.txt') as f:
 	lines = [n.strip() for n in f.readlines()]
@@ -99,5 +101,16 @@ def part2(lines):
 	return sum * int(calls[max(callsRequired) - 1])
 
 
-print("Part 1:", part1(lines))
-print("Part 2:", part2(lines))
+start = timer()
+p1 = part1(lines)
+end = timer()
+print("Part 1:", p1)
+print("Time (msec):", (end - start) * 1000)
+print()
+
+start = timer()
+p2 = part2(lines)
+end = timer()
+print("Part 2:", p2)
+print("Time (msec):", (end - start) * 1000)
+print()
