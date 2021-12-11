@@ -1,15 +1,15 @@
 from timeit import default_timer as timer
 
-lines = str()
-with open('X_input.txt') as f:
-	lines = [n.strip() for n in f.readlines()]
-
 def part1(lines):
 	pass
 
 def part2(lines):
 	pass
 
+
+lines = str()
+with open('X_input.txt') as f:
+	lines = [n.strip() for n in f.readlines()]
 
 start = timer()
 p1 = part1(lines)
