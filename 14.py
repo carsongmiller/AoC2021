@@ -1,9 +1,12 @@
 from timeit import default_timer as timer
+from collections import defaultdict
 
 lines = str()
 with open('14_input.txt') as f:
 	lines = [n.strip() for n in f.readlines()]
 
+def defValue():
+	return 0
 
 def day14Main(lines, numSteps):
 	poly = lines[0]
@@ -11,7 +14,7 @@ def day14Main(lines, numSteps):
 	for line in lines:
 		if len(line) > 0 and line[3] == '-': reactions[line[:2]] = line[-1]
 
-	pairCount = {}
+	pairCount = defaultdict(defValue)
 	
 	for i in range(len(poly) - 1):
 		currentPair = poly[i:i+2]
@@ -20,35 +23,26 @@ def day14Main(lines, numSteps):
 		else:
 			pairCount[currentPair] += 1
 	
-	# first and last letters never change
-	first = poly[0]
+	# last letter never changes
 	last = poly[-1]
 
 	for i in range(numSteps):
-		newPairCount = {}
+		newPairCount = defaultdict(defValue)
 
 		for pair in pairCount:
 			if pair in reactions:
 				newPairs = (pair[0] + reactions[pair], reactions[pair] + pair[1])
 				for newPair in newPairs:
-					if newPair in newPairCount: newPairCount[newPair] += pairCount[pair]
-					else: newPairCount[newPair] = pairCount[pair]
+					newPairCount[newPair] += pairCount[pair]
 			else:
-				if pair in newPairCount: newPairCount[pair] += pairCount[pair]
-				else: newPairCount[pair] = pairCount[pair]
+				newPairCount[pair] += pairCount[pair]
 		pairCount = newPairCount
 
-	charCount = {}
+	charCount = defaultdict(defValue)
 	for pair in pairCount:
-		for char in pair:
-			if char in charCount: charCount[char] += pairCount[pair]
-			else: charCount[char] = pairCount[pair]
+		charCount[pair[0]] += pairCount[pair]
 
-	charCount[first] += 1
 	charCount[last] += 1
-	
-	for char in charCount:
-		charCount[char] /= 2
 	
 	mx = 0
 	mn = 1000000000000000000000
